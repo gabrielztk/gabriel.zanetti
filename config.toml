@@ -1,5 +1,5 @@
 theme = "kodama-theme"
-base_url = "https://e1d7bc3f.gabriel-zanetti.pages.dev"
+base_url = "https://gabriel-zanetti.pages.dev"
 compile_sass = true
 build_search_index = true
 generate_feeds = true
