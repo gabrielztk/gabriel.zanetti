@@ -1,0 +1,37 @@
+theme = "kodama-theme"
+base_url = "https://gabriel.zanetti.tech"
+compile_sass = true
+build_search_index = true
+generate_feeds = true
+default_language = "pt"
+
+title = "Gabriel Zanetti"
+
+[markdown]
+highlight_code = true
+
+[extra]
+author = "Gabriel Zanetti"
+avatar = "static/img/avatar.jpg"
+favicon = "static/img/avatar.jpg"
+email = " gabrielzanettitech@gmail.com"
+
+contact_in_index = true
+
+menu_items = [
+  { path = "contato", name = "Contato" },
+  { path = "atom.xml", name = "RSS" },
+]
+
+
+
+[translations]
+Biography = "Meu Blog"
+Interests = "Interesses"
+Education = "Formação"
+Published = "Publicado"
+Abstract = "Resumo"
+toc = "Índice"
+volume = "volume"
+number = "número"
+pages = "páginas"
