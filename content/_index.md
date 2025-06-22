@@ -15,12 +15,14 @@ interests = [
 
 # The list of your degrees / education
 [[extra.education.courses]]
-  course = "Formação Executiva em Gestão Financeira"
+  course = "Gestão Financeira"
+  type = "Média duração"
   institution = "Fundação Getúlio Vargas"
   year = 2024
 
 [[extra.education.courses]]
   course = "Engenharia de Computação"
+  type = "Graduação"
   institution = "Insper - Intituto de Ensino e Pesquisa"
   year = 2022
 
