@@ -1,17 +1,17 @@
 theme = "kodama-theme"
-base_url = "https://gabriel-zanetti.pages.dev"
+base_url = "https://blog.gabrielkawall.net"
 compile_sass = true
 build_search_index = true
 generate_feeds = true
 default_language = "pt"
 
-title = "Gabriel Zanetti"
+title = "Gabriel Kawall"
 
 [markdown]
 highlight_code = true
 
 [extra]
-author = "Gabriel Zanetti"
+author = "Gabriel Kawall"
 avatar = "static/img/avatar.jpg"
 favicon = "static/img/avatar.jpg"
 email = " gabrielzanettitech@gmail.com"
@@ -22,6 +22,11 @@ menu_items = [
   { path = "contato", name = "Contato" },
   { path = "atom.xml", name = "RSS" },
 ]
+
+[slugify]
+paths = "safe"
+taxonomies = "on"
+anchors = "on"
 
 
 
