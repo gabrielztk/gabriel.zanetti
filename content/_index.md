@@ -32,7 +32,7 @@ interests = [
   link = "https://github.com/gabrielztk"
 [[extra.avatar_icons]]
   icon = "linkedin"
-  link = "https://www.linkedin.com/in/gabriel-k-584679220/"
+  link = "https://www.linkedin.com/in/gabriel-kawall-584679220/"
 +++
 
 Meu nome é Gabriel Kawall, estou feliz e entusiasmado em compartilhar minhas experiências, dicas e conhecimentos sobre tecnologia em geral, mas principalmente sobre Linux, DevOps e Homelabing. Espero que vocês tenham o mesmo entusiasmo em aprender sobre esses tópicos. Sejam muito bem-vindos!
