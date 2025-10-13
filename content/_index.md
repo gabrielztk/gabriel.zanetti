@@ -15,16 +15,23 @@ interests = [
 
 # The list of your degrees / education
 [[extra.education.courses]]
-  course = "Gestão Financeira"
-  type = "Média duração"
-  institution = "Fundação Getúlio Vargas"
-  year = 2024
-
-[[extra.education.courses]]
   course = "Engenharia de Computação"
   type = "Graduação"
   institution = "Insper - Intituto de Ensino e Pesquisa"
   year = 2022
+
+
+[[extra.education.courses]]
+  course = "Master in Business Management"
+  type = "Pós Graduação"
+  institution = "Insper - Intituto de Ensino e Pesquisa"
+  year = 2026
+
+[[extra.education.courses]]
+  course = "Gestão Financeira"
+  type = "Média duração"
+  institution = "Fundação Getúlio Vargas"
+  year = 2024
 
 # Finally, a list of icons with a link displayed below your avatar
 [[extra.avatar_icons]]
