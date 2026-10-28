@@ -1,0 +1,24 @@
+---
+import '../styles/global.css';
+const { title = 'Meu Blog', description = 'Experiências e conhecimentos sobre Linux, DevOps e Homelabing.', article = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const avatar = new URL('/img/avatar.jpg', Astro.site);
+---
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title} | Gabriel Kawall</title><meta name="description" content={description} />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="canonical" href={canonical} /><link rel="icon" href="/img/avatar.jpg" />
+  <link rel="alternate" type="application/atom+xml" title="Gabriel Kawall" href="/atom.xml" />
+  <meta property="og:title" content={`${title} | Gabriel Kawall`} /><meta property="og:description" content={description} />
+  <meta property="og:type" content={article ? 'article' : 'website'} /><meta property="og:url" content={canonical} /><meta property="og:image" content={avatar} />
+</head>
+<body>
+  <a class="skip" href="#main">Ir para o conteúdo</a>
+  <header class="site-header"><div class="header-inner"><a class="wordmark" href="/">Gabriel Kawall<span>Blog pessoal</span></a><nav aria-label="Principal"><a href="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>Sobre</a><a href="/blog/" aria-current={Astro.url.pathname.startsWith('/blog') ? 'page' : undefined}>Blog</a><a href="/contato/" aria-current={Astro.url.pathname === '/contato/' ? 'page' : undefined}>Contato</a><a href="/atom.xml">RSS</a></nav></div></header>
+  <main id="main"><slot /></main>
+  <footer class="site-footer"><span>Gabriel Kawall</span><span>Linux · DevOps · Homelabing</span><a href="/contato/">Vamos conversar</a></footer>
+</body>
+</html>

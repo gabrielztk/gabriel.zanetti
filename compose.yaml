@@ -1,0 +1,25 @@
+name: gabriel-blog-astro
+services:
+  media_server:
+    image: docker.io/library/python@sha256:b3575dcf816cdacc5292df77a6e3e59b8941631078373a045efa2ac1e9c5c3b2
+    pull_policy: never
+    user: "1000:1000"
+    command: ["python", "-m", "http.server", "80", "--bind", "0.0.0.0", "--directory", "/site"]
+    ports:
+      - "127.0.0.1:18843:80"
+    volumes:
+      - "./dist:/site:ro,Z"
+    sysctls:
+      net.ipv4.ip_unprivileged_port_start: 0
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    pids_limit: 64
+    mem_limit: 128m
+    cpus: 0.5
+    restart: unless-stopped
+    networks: [preview]
+networks:
+  preview:
+    internal: true

@@ -1,0 +1,41 @@
+{
+  "intro": "Meu nome é Gabriel Kawall, estou feliz e entusiasmado em compartilhar minhas experiências, dicas e conhecimentos sobre tecnologia em geral, mas principalmente sobre Linux, DevOps e Homelabing. Espero que vocês tenham o mesmo entusiasmo em aprender sobre esses tópicos. Sejam muito bem-vindos!",
+  "title": "Meu blog pessoal",
+  "interests": [
+    "Tecnologia",
+    "Eletrônicos",
+    "Self Hosting",
+    "Linux",
+    "DevOps"
+  ],
+  "education": [
+    {
+      "course": "Engenharia de Computação",
+      "type": "Graduação",
+      "institution": "Insper - Intituto de Ensino e Pesquisa",
+      "year": 2022
+    },
+    {
+      "course": "Master in Business Management",
+      "type": "Pós Graduação",
+      "institution": "Insper - Intituto de Ensino e Pesquisa",
+      "year": 2026
+    },
+    {
+      "course": "Gestão Financeira",
+      "type": "Média duração",
+      "institution": "Fundação Getúlio Vargas",
+      "year": 2024
+    }
+  ],
+  "links": [
+    {
+      "icon": "github",
+      "link": "https://github.com/gabrielztk"
+    },
+    {
+      "icon": "linkedin",
+      "link": "https://www.linkedin.com/in/gabriel-kawall-584679220/"
+    }
+  ]
+}

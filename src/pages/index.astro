@@ -1,0 +1,13 @@
+---
+import Base from '../layouts/Base.astro';
+import profile from '../data/profile.json';
+import { getCollection } from 'astro:content';
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort((a,b) => b.data.date.localeCompare(a.data.date));
+---
+<Base>
+<section class="profile-layout">
+  <aside class="profile-card"><img class="avatar" src="/img/avatar.jpg" alt="Gabriel Kawall" width="240" height="240" /><h1>Gabriel Kawall</h1><p>{profile.title}</p><div class="social-links">{profile.links.map(link => <a href={link.link}>{link.icon === 'github' ? 'GitHub' : 'LinkedIn'}</a>)}</div></aside>
+  <div class="biography"><p class="eyebrow">Tecnologia, prática e aprendizado</p><h2>Meu Blog</h2><p class="intro">{profile.intro}</p><div class="details-grid"><section><h3>Interesses</h3><ul class="interests">{profile.interests.map(interest => <li>{interest}</li>)}</ul></section><section><h3>Formação</h3><ol class="education">{profile.education.map(course => <li><span class="year">{course.year}</span><div><strong>{course.course}</strong><span>{course.type}</span><span>{course.institution}</span></div></li>)}</ol></section></div><section class="contact-inline"><h3>Contato</h3><a href="mailto:gabrielzanettitech@gmail.com">gabrielzanettitech@gmail.com</a></section></div>
+</section>
+<section class="recent"><div class="section-heading"><h2>Publicações recentes</h2><a href="/blog/">Ver todas →</a></div><div class="post-grid">{posts.map(post => <article class="post-card"><time datetime={post.data.date}>{post.data.date}</time><h3><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3><p>{post.data.description}</p><a class="read-link" href={`/blog/${post.id}/`}>Ler artigo →</a></article>)}</div></section>
+</Base>
