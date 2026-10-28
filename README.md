@@ -66,8 +66,8 @@ This branch stays on the coding VM. Do not push it to GitHub: the existing Pages
 integration could create an unwanted Cloudflare preview. No Cloudflare command
 or production deployment is part of this workflow.
 
-The Atom feed retains its URL and dated entries but now emits article summaries
-rather than full article bodies. This is an explicit phase-one feed limitation.
+The Atom feed retains its URL, dates, summaries and full rendered article bodies
+from the same Astro content collection, with a base URL for relative references.
 
 ## Verification limits
 

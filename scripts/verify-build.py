@@ -3,6 +3,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 import json
+import xml.etree.ElementTree as ET
 
 root = Path(__file__).resolve().parents[1]
 dist = root / "dist"
@@ -38,4 +39,10 @@ for post in json.loads((root/"migration-baseline.json").read_text()):
     assert post["date"] in text, f"Missing original date: {post['slug']}"
     assert post["title"].replace("&", "&amp;") in text or post["title"] in text, f"Missing original title: {post['slug']}"
 assert (dist/"atom.xml").exists() and (dist/"sitemap.xml").exists()
+feed = ET.parse(dist/"atom.xml")
+entries = feed.findall("{http://www.w3.org/2005/Atom}entry")
+assert len(entries) == 3
+for entry in entries:
+    content = entry.find("{http://www.w3.org/2005/Atom}content")
+    assert content is not None and len(content.text or "") > 100, "Missing full feed content"
 print(f"PASS: {len(pages)} pages, local links/assets/fragments, original article dates/titles, preview noindex")
