@@ -38,3 +38,10 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+## AstroPaper
+
+Actual theme source from https://github.com/satnaing/astro-paper, version 6.1.0,
+commit `35cfa7fbe0b897306d27670d3819e55d5205f3dd`. Copyright Sat Naing.
+MIT license retained in LICENSE-AstroPaper. Local changes adapt profile content,
+Portuguese labels, legacy article routes/anchors and private-preview metadata.

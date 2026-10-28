@@ -1,5 +1,7 @@
 ---
-import Base from '../layouts/Base.astro';
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 import SocialLink from '../components/SocialLink.astro';
 ---
-<Base title="Contato"><section class="page-heading"><p class="eyebrow">Gabriel Kawall</p><h1>Contato</h1><p><SocialLink kind="email" href="mailto:gabrielzanettitech@gmail.com" detail="gabrielzanettitech@gmail.com" /></p><p><SocialLink kind="github" href="https://github.com/gabrielztk" /></p><p><SocialLink kind="linkedin" href="https://www.linkedin.com/in/gabriel-kawall-584679220/" /></p></section></Base>
+<Layout title="Contato | Gabriel Kawall"><Header /><main id="main-content" class="app-layout my-8 space-y-5"><section class="space-y-5"><h1 class="text-3xl font-bold">Contato</h1><p><SocialLink kind="email" href="mailto:gabrielzanettitech@gmail.com" detail="gabrielzanettitech@gmail.com" /></p><p><SocialLink kind="github" href="https://github.com/gabrielztk" /></p><p><SocialLink kind="linkedin" href="https://www.linkedin.com/in/gabriel-kawall-584679220/" /></p></section></main><Footer /></Layout>

@@ -1,16 +1,105 @@
 ---
-import Base from '../layouts/Base.astro';
-import SocialLink from '../components/SocialLink.astro';
-import { Image } from 'astro:assets';
-import portrait from '../../public/img/avatar.jpg';
-import profile from '../data/profile.json';
-import { getCollection } from 'astro:content';
-const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort((a,b) => b.data.date.localeCompare(a.data.date));
+import { Image } from "astro:assets";
+import portrait from "../../public/img/avatar.jpg";
+import profile from "../data/profile.json";
+import { getCollection } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Socials from "@/components/Socials.astro";
+import Card from "@/components/Card.astro";
+import LinkButton from "@/components/LinkButton.astro";
+import { getSortedPosts } from "@/utils/getSortedPosts";
+import { useTranslations } from "@/i18n";
+import config from "@/config";
+
+const { posts: postsConfig } = config;
+
+const locale = Astro.currentLocale ?? config.site.lang;
+const t = useTranslations(locale);
+
+const posts = await getCollection("posts");
+const sortedPosts = getSortedPosts(posts);
+const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
+const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
+const homePath = getRelativeLocaleUrl(locale, "");
 ---
-<Base>
-<section class="profile-layout">
-  <aside class="profile-card"><Image class="avatar" src={portrait} alt="Gabriel Kawall" width={220} height={220} widths={[160, 220, 320, 440, 480, 660]} sizes="(max-width: 520px) 160px, 220px" format="webp" quality={80} fit="cover" loading="eager" fetchpriority="high" decoding="async" /><h1>Gabriel Kawall</h1><div class="social-links">{profile.links.map(link => <SocialLink kind={link.icon === 'github' ? 'github' : 'linkedin'} href={link.link} />)}<SocialLink kind="email" href="mailto:gabrielzanettitech@gmail.com" /></div></aside>
-  <div class="biography"><p class="eyebrow">Tecnologia, prática e aprendizado</p><h2>Meu Blog</h2><p class="intro">{profile.intro}</p><div class="details-grid"><section><h3>Interesses</h3><ul class="interests">{profile.interests.map(interest => <li>{interest}</li>)}</ul></section><section><h3>Formação</h3><ol class="education">{profile.education.map(course => <li><span class="year">{course.year}</span><div><strong>{course.course}</strong><span>{course.type}</span><span>{course.institution}</span></div></li>)}</ol></section></div></div>
-</section>
-<section class="recent"><div class="section-heading"><h2>Publicações recentes</h2><a href="/blog/">Ver todas →</a></div><div class="post-grid">{posts.map(post => <article class="post-card"><time datetime={post.data.date}>{post.data.date}</time><h3><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3><p>{post.data.description}</p><a class="read-link" href={`/blog/${post.id}/`}>Ler artigo →</a></article>)}</div></section>
-</Base>
+
+<Layout>
+  <Header />
+  <main
+    id="main-content"
+    data-layout="index"
+    data-home-path={homePath}
+    class="app-layout my-1"
+  >
+    <section id="hero" class="border-border border-b pt-8 pb-6">
+      <div class="profile-introduction">
+        <Image class="avatar" src={portrait} alt="Gabriel Kawall" width={220} height={220} widths={[160,220,320,440,480,660]} sizes="(max-width: 520px) 160px, 220px" format="webp" quality={80} fit="cover" loading="eager" fetchpriority="high" decoding="async" />
+        <div><h1 class="my-4 text-3xl font-bold sm:text-4xl">Gabriel Kawall</h1><Socials /></div>
+      </div>
+      <p class="mt-6">{profile.intro}</p>
+      <div class="mt-6 grid gap-6 sm:grid-cols-2">
+        <section><h2 class="mb-3 text-xl font-semibold">Interesses</h2><ul class="list-disc ps-5">{profile.interests.map(interest => <li>{interest}</li>)}</ul></section>
+        <section><h2 class="mb-3 text-xl font-semibold">Formação</h2><ol class="space-y-4">{profile.education.map(course => <li><span class="text-sm opacity-75">{course.year}</span><strong class="block">{course.course}</strong><span class="block text-sm">{course.type}</span><span class="block text-sm">{course.institution}</span></li>)}</ol></section>
+      </div>
+    </section>
+
+    {
+      featuredPosts.length > 0 && (
+        <section
+          id="featured"
+          class:list={[
+            "pt-12 pb-6",
+            { "border-border border-b": recentPosts.length > 0 },
+          ]}
+        >
+          <h2 class="text-2xl font-semibold tracking-wide">
+            {t.home.featured}
+          </h2>
+          <ul>
+            {featuredPosts.map(data => (
+              <Card variant="h3" {...data} />
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    {
+      recentPosts.length > 0 && (
+        <section id="recent-posts" class="pt-12 pb-6">
+          <h2 class="text-2xl font-semibold tracking-wide">
+            {t.home.recentPosts}
+          </h2>
+          <ul>
+            {recentPosts.slice(0, postsConfig.perIndex).map(data => (
+              <Card variant="h3" {...data} />
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    <div class="my-8 text-center">
+      <LinkButton href={getRelativeLocaleUrl(locale, "blog")}>
+        {t.home.allPosts}
+        <IconArrowRight class="inline-block rtl:-rotate-180" />
+      </LinkButton>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const indexLayout = (document.querySelector("#main-content") as HTMLElement)
+      ?.dataset;
+    const baseRoot = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+    if (indexLayout?.layout) {
+      sessionStorage.setItem("backUrl", indexLayout.homePath ?? baseRoot);
+    }
+  });
+</script>

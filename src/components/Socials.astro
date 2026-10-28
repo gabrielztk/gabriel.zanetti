@@ -1,0 +1,5 @@
+---
+import SocialLink from './SocialLink.astro';
+import profile from '../data/profile.json';
+---
+<div class="social-links">{profile.links.map(link => <SocialLink kind={link.icon === 'github' ? 'github' : 'linkedin'} href={link.link} />)}<SocialLink kind="email" href="mailto:gabrielzanettitech@gmail.com" /></div>

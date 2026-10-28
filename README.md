@@ -1,90 +1,75 @@
-# Gabriel Kawall — Astro preview
+# Gabriel Kawall — AstroPaper private preview
 
-Private phase-one Astro migration of the current Portuguese blog. It preserves
-all three article bodies, dates and paths, the homepage biography/education, the
-contact route, feed address and article images. Zola internal references are
-converted to public routes, including bundled article image paths; a heading plugin preserves ASCII fragment links.
-The old Zola implementation remains available in Git history.
+The blog uses AstroPaper 6.1.0 (upstream commit
+`35cfa7fbe0b897306d27670d3819e55d5205f3dd`) with its actual layouts,
+Tailwind typography, light/dark theme, Pagefind search, code copy buttons and
+article image lightbox. Gabriel's portrait, biography, education, three articles,
+contact information and labeled social icons replace the theme's example content.
+The previous custom layout remains in Git history.
 
-Peithos native Hermes consultation favored preserving Kodamas academic
-composition, portrait, readable columns, education and restrained blue links.
-This branch applies that visual direction in Astro as requested; it does not
-claim Peitho recommended changing generators.
+Article bodies, original dates, `/blog/` routes, eight article images and ASCII
+heading anchors are preserved. The Atom feed remains `/atom.xml` with full rendered
+article content. Original date-only publications are stored at midnight UTC and
+displayed in UTC to prevent calendar dates shifting across time zones.
+The homepage has no profile tagline or repeated contact section, as requested.
+Professional/editorial changes remain separate in `work/hermes-blog-knowledge`.
 
-The portrait uses Astro build-time image processing with responsive WebP variants
-for 160px mobile and 220px desktop presentation, including high-density screens.
-The original JPEG remains at its existing path; homepage and favicon requests use
-optimized output. Explicit square dimensions preserve layout space while loading.
+## Build and edit
 
-The restrained academic layout keeps the circular portrait, profile column,
-biography, education and readable articles, with responsive CSS. It is a local
-custom layout, not an adopted third-party theme. Final personal identity and
-editorial improvements are a later phase owned by the Hermes knowledge branch.
-Existing article factual issues are intentionally not corrected in this parity
-branch. Source-controlled brief material belongs to `work/hermes-blog-knowledge`.
-
-## Build
-
-Use the account-owned Node 24.21.0 toolchain through mise. Astro and its maintained
-Markdown processor are exact-pinned in package.json and package-lock.json. The
-Markdown processor supports the retained heading-ID plugin.
+Use account-owned Node 24.21.0 through mise and pnpm 11.3.0. Direct dependency
+versions and the full graph are pinned; install uses the frozen lockfile.
 
 ```sh
 make install
 make build verify
 ```
 
-`src/content/blog/` holds Markdown articles; `src/data/profile.json` holds the
-existing profile copy. Layouts and components live under `src/`, shared CSS under
-`src/styles/`, static images under `public/`. `migration-baseline.json` records
-original post routes, titles and dates. Generated output is excluded from Git.
-All preview pages carry noindex/nofollow and robots.txt denies crawling.
-Canonical/feed URLs retain the public blog origin; public deployment would need
-an explicit review of indexing and publication settings.
+Articles live in `src/content/posts/` with `pubDatetime` frontmatter;
+`src/data/profile.json` owns existing biography data. `astro-paper.config.ts`
+owns site settings; `src/styles/theme.css` owns the native theme palette.
+`src/i18n/lang/pt-BR.ts` translates interface labels. Preserve article bodies
+when changing presentation. `migration-baseline.json` records original titles,
+dates and routes. `scripts/verify-build.py` checks generated routes, assets,
+fragments, full feed, noindex and optimized portrait variants.
 
-## Private preview
+The portrait uses Astro-generated WebP (160px mobile / 220px desktop, responsive
+high-density variants). The original JPEG remains at its legacy URL; homepage
+and favicon requests use optimized assets. GitHub/LinkedIn/Email retain visible
+labels, official local brand marks and keyboard focus indicators. See
+THIRD-PARTY-NOTICES.md and LICENSE-AstroPaper for upstream attribution.
+Theme fonts are downloaded at build time and served locally in the generated
+site; browser rendering does not require a font CDN.
 
-The preview runs as gabriel.kawall on Coding VM260 in
-`~/workspace/gabriel-blog-astro`, branch `work/astro-blog-preview`.
+## Private preview operation
+
+Checkout: `~/workspace/gabriel-blog-astro` on Coding VM260, account
+`gabriel.kawall`, branch `work/astro-blog-preview`.
 
 ```sh
 make up
 make down
 ```
 
-Compose serves built static files through Python's HTTP server in a rootless
-container, with read-only files/rootfs, non-root UID, dropped capabilities,
-no-new-privileges and bounded resources. Its existing image is pinned by digest;
-`pull_policy: never` makes provisioning an explicit prerequisite on a new host.
-Its private network namespace permits unprivileged port 80 binding without
-adding capabilities or changing the host port policy. It is a private development server, not a production serving design.
+The existing Compose project `gabriel-blog-astro` serves `dist/` using the pinned
+Python image. It is rootless, UID1000, read-only, drops capabilities, sets
+no-new-privileges and retains its resource limits/internal network. The image
+must already exist locally (`pull_policy: never`). This is a private development
+server, not a production serving design. No infrastructure permissions changed.
 
-The service name `media_server` and container port 80 match the already enrolled
-preview selector. Only 127.0.0.1:18843 is published. The existing Horai dashboard
-at https://dashboard.dev.horai.gabrielkawall.net discovers project
-`gabriel-blog-astro` under Coding and assigns its authenticated HTTPS address.
-Current assigned URL: https://f5yipw.dev.horai.gabrielkawall.net.
-No DNS, firewall or Cloudflare changes are needed. The built site uses relative
-asset links so its assigned hostname does not require rebuilding.
+Service `media_server:80` publishes only `127.0.0.1:18843`; the existing Horai
+collector discovers it. Dashboard: https://dashboard.dev.horai.gabrielkawall.net.
+Preview: https://f5yipw.dev.horai.gabrielkawall.net. Access requires the existing
+Authentik grant. Source builds refresh the bind-mounted static files.
 
-This branch stays on the coding VM. Do not push it to GitHub: the existing Pages
-integration could create an unwanted Cloudflare preview. No Cloudflare command
-or production deployment is part of this workflow.
+All HTML is noindex/nofollow, robots.txt denies crawling, and canonical/feed URLs
+use the private preview origin. Public deployment requires an explicit review of
+origin/indexing settings. Do not push this branch: GitHub's Pages integration
+could trigger unwanted publication. No Cloudflare, public DNS, firewall or
+production changes are included in this task.
 
-The Atom feed retains its URL, dates, summaries and full rendered article bodies
-from the same Astro content collection, with a base URL for relative references.
+## Acceptance
 
-## Verification limits
-
-The verifier checks built page titles, noindex, local links/assets/fragments and
-original article dates. Browser review covers mobile/desktop appearance and
-keyboard navigation separately. HTTPS access requires the existing Authentik
-preview grant; local HTTP availability alone does not establish browser access.
-
-## Contact icons
-
-GitHub, LinkedIn and Email use visible text labels beside local decorative icons.
-GitHub uses its official Octicons SVG, LinkedIn its unchanged official blue PNG,
-and email a simple envelope. All marks are 24px high, keep their proportions and
-have keyboard focus indicators. Sources and required attribution are recorded in
-THIRD-PARTY-NOTICES.md. No icon library, font CDN or tracking is loaded.
+`make build verify` includes Astro type checking, static generation, local search
+indexing and link/content checks. Browser review separately checks responsive
+layout, local assets, dark mode, search, code copy and authentication. HTTP
+loopback success alone does not establish authenticated browser access.

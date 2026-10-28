@@ -5,8 +5,10 @@ Preserve the published article bodies, dates, URLs, images and ASCII heading anc
 Professional knowledge and editorial revisions belong to the separate
 `work/hermes-blog-knowledge` branch; do not merge them implicitly.
 
-Use stable Astro APIs, ordinary CSS and the shared components. Keep dependencies
-exactly pinned with the lockfile and Node version in mise.toml. Consult official
+Use the adopted AstroPaper layouts, Tailwind utilities and shared components.
+Keep the native light/dark theme, Pagefind search and accessible controls.
+Use stable Astro APIs. Keep dependencies
+exactly pinned with pnpm-lock.yaml and Node version in mise.toml. Consult official
 version-matched Astro documentation before implementation. Framework documentation
 is available through https://mcp.docs.astro.build/mcp and Exa.
 

@@ -1,6 +1,6 @@
 ---
 title: "Deploy automatizado do GLPI com Ansible"
-date: "2025-10-13"
+pubDatetime: 2025-10-13T00:00:00Z
 description: "Como instalar e fazer o deploy do software de TI GLPI, de maneira automatizada usando a ferramenta de configuração remota Ansible"
 ---
 

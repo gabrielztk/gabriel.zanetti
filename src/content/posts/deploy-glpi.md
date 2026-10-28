@@ -1,6 +1,6 @@
 ---
 title: "Instalação & Deploy do GLPI"
-date: "2025-06-22"
+pubDatetime: 2025-06-22T00:00:00Z
 description: "Como instalar e fazer o deploy do software de TI GLPI"
 ---
 

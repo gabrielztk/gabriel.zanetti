@@ -1,6 +1,6 @@
 ---
 title: "Bem vindos!!!"
-date: "2024-12-07"
+pubDatetime: 2024-12-07T00:00:00Z
 description: "Meu primeiro post"
 ---
 

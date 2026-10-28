@@ -1,6 +1,0 @@
----
-import Base from '../../layouts/Base.astro';
-import { getCollection } from 'astro:content';
-const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort((a,b) => b.data.date.localeCompare(a.data.date));
----
-<Base title="Blog"><section class="page-heading"><p class="eyebrow">Notas de prática</p><h1>Blog</h1></section><div class="post-list">{posts.map(post => <article class="post-card"><time datetime={post.data.date}>{post.data.date}</time><h2><a href={`/blog/${post.id}/`}>{post.data.title}</a></h2><p>{post.data.description}</p><a class="read-link" href={`/blog/${post.id}/`}>Ler artigo →</a></article>)}</div></Base>
