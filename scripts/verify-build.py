@@ -9,13 +9,17 @@ root = Path(__file__).resolve().parents[1]
 dist = root / "dist"
 class Page(HTMLParser):
     def __init__(self, text):
-        super().__init__(); self.links=[]; self.ids=set(); self.titles=0; self.noindex=False
+        super().__init__(); self.links=[]; self.ids=set(); self.titles=0; self.noindex=False; self.avatar=None; self.favicon=None
         self.feed(text)
     def handle_starttag(self, tag, attrs):
         attrs=dict(attrs)
         if tag == "title": self.titles += 1
         if "id" in attrs: self.ids.add(attrs["id"])
         if tag == "meta" and attrs.get("name") == "robots": self.noindex="noindex" in attrs.get("content", "")
+        if tag == "img" and "avatar" in attrs.get("class", "").split(): self.avatar=attrs
+        if tag == "link" and attrs.get("rel") == "icon": self.favicon=attrs.get("href")
+        for candidate in attrs.get("srcset", "").split(","):
+            if candidate.strip(): self.links.append(candidate.strip().split()[0])
         for key in ("src", "href"):
             if attrs.get(key): self.links.append(attrs[key])
 
@@ -34,6 +38,16 @@ for path,page in pages.items():
         if parsed.fragment and target.suffix == ".html":
             target_page=pages.get(target) or Page(target.read_text())
             assert unquote(parsed.fragment) in target_page.ids, f"Broken fragment {path}: {link}"
+home=pages[dist/"index.html"]
+assert home.avatar and home.avatar["width"] == "220" and home.avatar["height"] == "220"
+assert home.avatar["sizes"] == "(max-width: 520px) 160px, 220px"
+assert home.avatar["src"].endswith(".webp") and home.favicon.endswith(".webp")
+assert home.avatar["loading"] == "eager" and home.avatar["fetchpriority"] == "high"
+variants=home.avatar["srcset"].split(",")
+assert {int(v.strip().split()[1][:-1]) for v in variants} == {160,220,320,440,480,660}
+for candidate in variants:
+    asset=dist/candidate.strip().split()[0].lstrip("/")
+    assert asset.stat().st_size < 100_000, f"Unexpected portrait payload: {asset}"
 for post in json.loads((root/"migration-baseline.json").read_text()):
     text=(dist / "blog" / post["slug"] / "index.html").read_text()
     assert post["date"] in text, f"Missing original date: {post['slug']}"

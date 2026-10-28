@@ -11,6 +11,11 @@ composition, portrait, readable columns, education and restrained blue links.
 This branch applies that visual direction in Astro as requested; it does not
 claim Peitho recommended changing generators.
 
+The portrait uses Astro build-time image processing with responsive WebP variants
+for 160px mobile and 220px desktop presentation, including high-density screens.
+The original JPEG remains at its existing path; homepage and favicon requests use
+optimized output. Explicit square dimensions preserve layout space while loading.
+
 The restrained academic layout keeps the circular portrait, profile column,
 biography, education and readable articles, with responsive CSS. It is a local
 custom layout, not an adopted third-party theme. Final personal identity and

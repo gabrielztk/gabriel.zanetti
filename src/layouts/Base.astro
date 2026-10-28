@@ -1,5 +1,8 @@
 ---
 import '../styles/global.css';
+import { getImage } from 'astro:assets';
+import portrait from '../../public/img/avatar.jpg';
+const favicon = await getImage({ src: portrait, width: 48, height: 48, format: 'webp', fit: 'cover' });
 const { title = 'Meu Blog', description = 'Experiências e conhecimentos sobre Linux, DevOps e Homelabing.', article = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const avatar = new URL('/img/avatar.jpg', Astro.site);
@@ -10,7 +13,7 @@ const avatar = new URL('/img/avatar.jpg', Astro.site);
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{title} | Gabriel Kawall</title><meta name="description" content={description} />
   <meta name="robots" content="noindex, nofollow" />
-  <link rel="canonical" href={canonical} /><link rel="icon" href="/img/avatar.jpg" />
+  <link rel="canonical" href={canonical} /><link rel="icon" type="image/webp" href={favicon.src} />
   <link rel="alternate" type="application/atom+xml" title="Gabriel Kawall" href="/atom.xml" />
   <meta property="og:title" content={`${title} | Gabriel Kawall`} /><meta property="og:description" content={description} />
   <meta property="og:type" content={article ? 'article' : 'website'} /><meta property="og:url" content={canonical} /><meta property="og:image" content={avatar} />
