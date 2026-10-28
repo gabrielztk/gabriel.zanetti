@@ -1,5 +1,7 @@
 ---
 import SocialLink from './SocialLink.astro';
 import profile from '../data/profile.json';
+interface Props { iconsOnly?: boolean; }
+const { iconsOnly = false } = Astro.props;
 ---
-<div class="social-links">{profile.links.map(link => <SocialLink kind={link.icon === 'github' ? 'github' : 'linkedin'} href={link.link} />)}<SocialLink kind="email" href="mailto:gabrielzanettitech@gmail.com" /></div>
+<div class:list={["social-links", { "social-links-icons": iconsOnly }]}>{profile.links.map(link => <SocialLink kind={link.icon === 'github' ? 'github' : 'linkedin'} href={link.link} {iconsOnly} />)}<SocialLink kind="email" href="mailto:gabrielzanettitech@gmail.com" {iconsOnly} /></div>

@@ -35,7 +35,9 @@ fragments, full feed, noindex and optimized portrait variants.
 The portrait uses Astro-generated WebP (160px mobile / 220px desktop, responsive
 high-density variants). The original JPEG remains at its legacy URL; homepage
 and favicon requests use optimized assets. GitHub/LinkedIn/Email retain visible
-labels, official local brand marks and keyboard focus indicators. See
+labels on the profile and contact page. The footer uses one nonwrapping row of
+icons with screen-reader labels, plus copyright without a rights-reserved notice.
+All links retain official local brand marks and keyboard focus indicators. See
 THIRD-PARTY-NOTICES.md and LICENSE-AstroPaper for upstream attribution.
 Theme fonts are downloaded at build time and served locally in the generated
 site; browser rendering does not require a font CDN.
@@ -63,9 +65,11 @@ Authentik grant. Source builds refresh the bind-mounted static files.
 
 All HTML is noindex/nofollow, robots.txt denies crawling, and canonical/feed URLs
 use the private preview origin. Public deployment requires an explicit review of
-origin/indexing settings. Do not push this branch: GitHub's Pages integration
-could trigger unwanted publication. No Cloudflare, public DNS, firewall or
-production changes are included in this task.
+origin/indexing settings. Pushing the secondary `work/astro-blog-preview` branch
+is now explicitly authorized. GitHub integration may run its existing automation;
+manual Cloudflare operations, public DNS/firewall changes and merging the branch
+remain outside this preview task. Hermes profiles coordinate public deployment
+separately.
 
 ## Acceptance
 

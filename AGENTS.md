@@ -12,8 +12,9 @@ exactly pinned with pnpm-lock.yaml and Node version in mise.toml. Consult offici
 version-matched Astro documentation before implementation. Framework documentation
 is available through https://mcp.docs.astro.build/mcp and Exa.
 
-Never deploy to Cloudflare, push branches or change public DNS as part of this
-preview task. The production branch and public site are outside this branch's
+Do not deploy to Cloudflare or change public DNS as part of this preview task.
+Pushing `work/astro-blog-preview` is explicitly authorized; this does not authorize
+merging it or manually deploying the public site. The production branch and public site are outside this branch's
 execution scope. Read README.md for preview operation and current limits.
 
 Run `make build verify` before committing and verify the dashboard after container

@@ -41,6 +41,7 @@
 .profile-introduction { display:flex; align-items:center; gap:2rem; flex-wrap:wrap; }
 .avatar { width:220px; height:220px; object-fit:cover; border-radius:50%; flex-shrink:0; }
 .social-links { display:flex; align-items:center; flex-wrap:wrap; gap:1rem; }
+.social-links.social-links-icons { flex-wrap:nowrap; flex-shrink:0; }
 .social-link { display:inline-flex; align-items:center; gap:.45rem; text-decoration:none; }
 .social-link:hover { color:var(--color-accent); text-decoration:underline; }
 .social-link:focus-visible { outline:3px solid var(--color-accent); outline-offset:4px; }
