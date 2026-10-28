@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import SocialLink from '../components/SocialLink.astro';
+import profile from '../data/profile.json';
 import { getImage } from 'astro:assets';
 import portrait from '../../public/img/avatar.jpg';
 const favicon = await getImage({ src: portrait, width: 48, height: 48, format: 'webp', fit: 'cover' });
@@ -22,6 +24,6 @@ const avatar = new URL('/img/avatar.jpg', Astro.site);
   <a class="skip" href="#main">Ir para o conteúdo</a>
   <header class="site-header"><div class="header-inner"><a class="wordmark" href="/">Gabriel Kawall<span>Blog pessoal</span></a><nav aria-label="Principal"><a href="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>Sobre</a><a href="/blog/" aria-current={Astro.url.pathname.startsWith('/blog') ? 'page' : undefined}>Blog</a><a href="/contato/" aria-current={Astro.url.pathname === '/contato/' ? 'page' : undefined}>Contato</a><a href="/atom.xml">RSS</a></nav></div></header>
   <main id="main"><slot /></main>
-  <footer class="site-footer"><span>Gabriel Kawall</span><span>Linux · DevOps · Homelabing</span><a href="/contato/">Vamos conversar</a></footer>
+  <footer class="site-footer"><span>Gabriel Kawall</span><span>Linux · DevOps · Homelabing</span><nav class="footer-social" aria-label="Redes e contato">{profile.links.map(link => <SocialLink kind={link.icon === 'github' ? 'github' : 'linkedin'} href={link.link} />)}<SocialLink kind="email" href="mailto:gabrielzanettitech@gmail.com" /></nav></footer>
 </body>
 </html>

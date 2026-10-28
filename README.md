@@ -80,3 +80,11 @@ The verifier checks built page titles, noindex, local links/assets/fragments and
 original article dates. Browser review covers mobile/desktop appearance and
 keyboard navigation separately. HTTPS access requires the existing Authentik
 preview grant; local HTTP availability alone does not establish browser access.
+
+## Contact icons
+
+GitHub, LinkedIn and Email use visible text labels beside local decorative icons.
+GitHub uses its official Octicons SVG, LinkedIn its unchanged official blue PNG,
+and email a simple envelope. All marks are 24px high, keep their proportions and
+have keyboard focus indicators. Sources and required attribution are recorded in
+THIRD-PARTY-NOTICES.md. No icon library, font CDN or tracking is loaded.
