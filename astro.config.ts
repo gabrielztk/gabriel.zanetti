@@ -18,12 +18,26 @@ import {
 } from "@shikijs/transformers";
 import { transformerFileName } from "./src/utils/transformers/fileName";
 import legacyHeadingIds from "./scripts/legacy-heading-ids.mjs";
+import { writeFile } from "node:fs/promises";
+import { isProduction } from "./src/site-env";
 import config from "./astro-paper.config";
 
 export default defineConfig({
   site: config.site.url,
   trailingSlash: "always",
   integrations: [
+    {
+      name: "release-indexing-headers",
+      hooks: {
+        "astro:build:done": async ({ dir }) => {
+          // Static Pages response rules, not Astro dev-server headers.
+          await writeFile(
+            new URL("_headers", dir),
+            isProduction ? "" : "/*\n  X-Robots-Tag: noindex, nofollow\n"
+          );
+        },
+      },
+    },
     mdx(),
     sitemap({
       filter: page =>

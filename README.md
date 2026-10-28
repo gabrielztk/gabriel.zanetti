@@ -63,13 +63,53 @@ collector discovers it. Dashboard: https://dashboard.dev.horai.gabrielkawall.net
 Preview: https://f5yipw.dev.horai.gabrielkawall.net. Access requires the existing
 Authentik grant. Source builds refresh the bind-mounted static files.
 
-All HTML is noindex/nofollow, robots.txt denies crawling, and canonical/feed URLs
-use the private preview origin. Public deployment requires an explicit review of
-origin/indexing settings. Pushing the secondary `work/astro-blog-preview` branch
-is now explicitly authorized. GitHub integration may run its existing automation;
-manual Cloudflare operations, public DNS/firewall changes and merging the branch
-remain outside this preview task. Hermes profiles coordinate public deployment
-separately.
+Builds default to private preview: all HTML is noindex/nofollow, robots.txt denies
+crawling, the Pages `_headers` file sets X-Robots-Tag, and canonical/feed/sitemap
+and social metadata use the private preview origin. Only the exact build-time
+value `SITE_ENV=production` enables public output. Unset or other values remain
+preview; `NODE_ENV=production` alone does not publish. `make up` forces preview
+mode even if SITE_ENV was inherited or passed on the make command line. Compose
+only serves the generated files; its runtime environment cannot change indexing.
+Do not bind a production dist to the private server manually.
+
+## Production build contract
+
+The authorized release preparation stays on `work/astro-blog-preview`. Pushes to
+main require a separate operator readiness receipt. No knowledge-branch merge,
+manual Cloudflare operation or infrastructure change is included in this task.
+This authorization supersedes the earlier local-preview-only preparation limit.
+
+Pages production settings (configured separately by the operator):
+
+```text
+Build command: npm exec --yes --package=pnpm@11.3.0 -- pnpm install --frozen-lockfile && npm exec --yes --package=pnpm@11.3.0 -- pnpm run build
+Output directory: dist
+NODE_VERSION=24.21.0
+SKIP_DEPENDENCY_INSTALL=true
+SITE_ENV=production
+```
+
+Set SITE_ENV only in the production build environment; preview builds must omit
+it or set `preview`. The application reads SITE_ENV from the build process, not
+from a serving container or a runtime request. Production origin is fixed to
+`https://blog.gabrielkawall.net`, with no private URL override. Production omits
+the robots noindex meta and X-Robots-Tag response rule, permits crawling and
+advertises the production sitemap. Both modes share the same articles and theme.
+The Pages-specific NODE_VERSION and SKIP_DEPENDENCY_INSTALL variables are platform
+settings, not application switches. Node 24.21.0 matches mise.toml; pnpm 11.3.0
+matches packageManager and the frozen lockfile. The build runs Astro checking,
+static generation and Pagefind; it needs build-time network access for fonts.
+
+```sh
+env -u SITE_ENV make build verify
+SITE_ENV=production make build verify
+```
+
+Use the same SITE_ENV for build and verification. Generated dist, Pagefind and
+installed dependencies remain untracked. The verifier checks each mode's origins,
+indexing, headers and robots, and rejects private-origin bytes anywhere in the
+production output. Static output checks do not prove live Pages headers or DNS;
+the operator must verify those after publication.
 
 ## Acceptance
 

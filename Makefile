@@ -7,6 +7,8 @@ build:
 	ASTRO_TELEMETRY_DISABLED=1 $(PNPM) run build
 verify:
 	python3 scripts/verify-build.py
+# Never serve a production artifact through the private Compose workflow.
+up: override export SITE_ENV = preview
 up: build verify
 	docker compose up -d
 down:

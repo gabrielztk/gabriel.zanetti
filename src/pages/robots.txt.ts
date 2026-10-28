@@ -1,3 +1,10 @@
+import { isProduction, siteURL } from "../site-env";
+
 export function GET() {
-  return new Response("User-agent: *\nDisallow: /\n", {headers: {"Content-Type": "text/plain; charset=utf-8"}});
+  const body = isProduction
+    ? `User-agent: *\nAllow: /\nSitemap: ${siteURL}/sitemap-index.xml\n`
+    : "User-agent: *\nDisallow: /\n";
+  return new Response(body, {
+    headers: { "Content-Type": "text/plain; charset=utf-8" },
+  });
 }

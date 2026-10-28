@@ -1,8 +1,9 @@
 import { defineAstroPaperConfig } from "./src/types/config";
+import { siteURL } from "./src/site-env";
 
 export default defineAstroPaperConfig({
   site: {
-    url: "https://f5yipw.dev.horai.gabrielkawall.net/",
+    url: siteURL,
     title: "Gabriel Kawall",
     description: "Tecnologia, prática e aprendizado.",
     author: "Gabriel Kawall",

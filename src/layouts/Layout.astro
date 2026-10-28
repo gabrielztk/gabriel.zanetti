@@ -4,10 +4,10 @@ import portrait from "../../public/img/avatar.jpg";
 const favicon = await getImage({src: portrait, width: 48, height: 48, format: "webp", fit: "cover"});
 import { Font } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
-import { getRelativeLocaleUrl } from "astro:i18n";
 import { resolveDefaultOgImagePath } from "@/utils/resolveDefaultOgImagePath";
 import { getAssetPath } from "@/utils/withBase";
 import config from "@/config";
+import { isProduction } from "@/site-env";
 import "@/styles/global.css";
 
 type Props = {
@@ -27,10 +27,7 @@ const {
 } = Astro.props;
 
 const socialImageURL = new URL(ogImage, Astro.site ?? Astro.url);
-const rssHref = getRelativeLocaleUrl(
-  Astro.currentLocale ?? config.site.lang,
-  "atom.xml"
-);
+const rssHref = new URL("atom.xml", Astro.site);
 ---
 
 <!doctype html>
@@ -41,7 +38,7 @@ const rssHref = getRelativeLocaleUrl(
 >
   <head>
     <meta charset="UTF-8" />
-    <meta name="robots" content="noindex,nofollow" />
+    {!isProduction && <meta name="robots" content="noindex,nofollow" />}
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/webp" href={favicon.src} />
     <link rel="canonical" href={canonicalURL} />
